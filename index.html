@@ -107,13 +107,13 @@
             <span class="search" @click="search">查詢</span>
             <div class="result" v-for="item in jackpotList">
                 <span class="result_text"
-                    >咚咚隆咚鏘~恭喜您中了第{{item.time}}周的{{item.name}}</span
+                    >🎊 🎊 🎊 恭喜您中了第{{item.time}}周的{{item.name}}🎊 🎊 🎊</span
                 >
                 <img :src="item.imgSrc" class="prizeLogo" alt="" />
                 <!-- {{ item }} -->
             </div>
             <div v-if="showResult && jackpotList.length === 0" class="result">
-                <span class="result_text">Oops...You got nothing !!</span>
+                <span class="result_text">💩💩💩Oops...You got nothing !!💩💩💩</span>
                 <img class="result_nothingImg"
                     src="https://memeprod.sgp1.digitaloceanspaces.com/user-wtf/1592115472837.jpg"
                     alt=""

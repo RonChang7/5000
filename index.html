@@ -24,12 +24,27 @@
         #app {
             width: 700px;
             text-align: center;
+            margin: 100px;
         }
-        h1 {
+       
+        .title {
             /* text-align-last: left; */
         }
         .subTitle {
+            animation: fade 1s infinite;
             width: 20px;
+            display: inline;
+        }
+        @keyframes fade {
+            from {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.4;
+            }
+            to {
+                opacity: 1;
+            }
         }
         input {
             font-size: 20px;
@@ -38,8 +53,9 @@
             padding: 9px;
             margin-bottom: 20px;
             border-radius: 6px;
+            margin-top: 50px;
         }
-        input:focus{
+        input:focus {
             border: solid 1px #2895a1;
         }
         .search {
@@ -67,35 +83,38 @@
             color: #e4004d;
             margin-top: 50px;
         }
-        .result_text{
+        .result_text {
             font-size: 18px;
         }
-        img {
+        .result_nothingImg {
             width: 500px;
-            margin: auto;
+            margin:20px auto;
         }
         .prizeLogo {
             width: 150px;
+            margin: auto;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <body>
         <div id="app">
             <h1 class="title">5倍力量</h1>
-            <h4>今年是5倍 <img v-for=" item in 5" class="subTitle" src="/diamond.svg" alt /></h4>
+            <h3 class="subTitle">今年是5倍 <img v-for=" item in 5" class="subTitle" src="./diamond.svg" alt /></h3>
             <br />
             <!-- <img :src="imgList" alt="noPics" /><br /> -->
             <span></span>
             <input type="text" placeholder="請輸入身分證字號後三碼" v-model="personalID" />
             <span class="search" @click="search">查詢</span>
             <div class="result" v-for="item in jackpotList">
-                <span class="result_text">咚咚隆咚鏘~恭喜您中了第{{item.time}}周的{{item.name}}</span>
+                <span class="result_text"
+                    >咚咚隆咚鏘~恭喜您中了第{{item.time}}周的{{item.name}}</span
+                >
                 <img :src="item.imgSrc" class="prizeLogo" alt="" />
                 <!-- {{ item }} -->
             </div>
             <div v-if="showResult && jackpotList.length === 0" class="result">
-                Oops...You got nothing !!
-                <img
+                <span class="result_text">Oops...You got nothing !!</span>
+                <img class="result_nothingImg"
                     src="https://memeprod.sgp1.digitaloceanspaces.com/user-wtf/1592115472837.jpg"
                     alt=""
                 />
@@ -108,6 +127,7 @@
             data: {
                 showResult: false,
                 personalID: '',
+
                 imgList: [
                     // 'https://s3.buy123.com.tw/images/upload/ISoy0kqUrE3VYJ9m.png'
                 ],
@@ -258,14 +278,25 @@
                 search() {
                     this.showResult = true
                     this.jackpotList = []
+                    if (this.personalID === '') return
                     this.w1List.forEach((el) => {
-                        const found = el.list.find((item) => {
-                            if (item === this.personalID) this.jackpotList.push(el)
+                        const found = el.list.filter((item) => {
+                            let newStr
+                            if (item.length === 2) newStr = this.personalID.slice(-2)
+                            else newStr = this.personalID
+                            const findStr = newStr.includes(item)
+                            if (findStr) this.jackpotList.push(el)
+                            return this.jackpotList
                         })
                     })
                     this.w2List.forEach((el) => {
-                        const found = el.list.find((item) => {
-                            if (item === this.personalID) this.jackpotList.push(el)
+                        const found = el.list.filter((item) => {
+                            let newStr
+                            if (item.length === 2) newStr = this.personalID.slice(-2)
+                            else newStr = this.personalID
+                            const findStr = newStr.includes(item)
+                            if (findStr) this.jackpotList.push(el)
+                            return this.jackpotList
                         })
                     })
                     console.log(this.jackpotList)

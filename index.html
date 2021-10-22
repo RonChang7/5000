@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://vhpi.5000.gov.tw/inc/img/ico.png" rel="icon" />
+        <title>5000</title>
+    </head>
+    <style>
+        body {
+            margin: auto;
+            height: 100vh;
+            line-height: 1.5;
+            display: flex;
+            justify-content: center;
+            color: cadetblue;
+            font-weight: bold;
+            /* background: url('https://scx2.b-cdn.net/gfx/news/hires/2018/universe.jpg'); */
+            background: #000;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        #app {
+            width: 700px;
+            text-align: center;
+        }
+        h1 {
+            /* text-align-last: left; */
+        }
+        .subTitle {
+            width: 20px;
+        }
+        input {
+            font-size: 20px;
+            border: solid 1px transparent;
+            outline: none;
+            padding: 9px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+        input:focus{
+            border: solid 1px #2895a1;
+        }
+        .search {
+            font-size: 16px;
+            border: none;
+            color: silver;
+            cursor: pointer;
+            outline: none;
+            padding: 14px 13px 12px;
+            margin-left: -10px;
+            background: #254043;
+            border-radius: 0 6px 6px 0;
+        }
+        .search:hover {
+            font-weight: bold;
+            background: #2895a1;
+            color: #f2f2f1;
+        }
+        ::-webkit-input-placeholder {
+            font-size: 16px;
+        }
+        .result {
+            display: flex;
+            flex-direction: column;
+            color: #e4004d;
+            margin-top: 50px;
+        }
+        .result_text{
+            font-size: 18px;
+        }
+        img {
+            width: 500px;
+            margin: auto;
+        }
+        .prizeLogo {
+            width: 150px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <body>
+        <div id="app">
+            <h1 class="title">5倍力量</h1>
+            <h4>今年是5倍 <img v-for=" item in 5" class="subTitle" src="/diamond.svg" alt /></h4>
+            <br />
+            <!-- <img :src="imgList" alt="noPics" /><br /> -->
+            <span></span>
+            <input type="text" placeholder="請輸入身分證字號後三碼" v-model="personalID" />
+            <span class="search" @click="search">查詢</span>
+            <div class="result" v-for="item in jackpotList">
+                <span class="result_text">咚咚隆咚鏘~恭喜您中了第{{item.time}}周的{{item.name}}</span>
+                <img :src="item.imgSrc" class="prizeLogo" alt="" />
+                <!-- {{ item }} -->
+            </div>
+            <div v-if="showResult && jackpotList.length === 0" class="result">
+                Oops...You got nothing !!
+                <img
+                    src="https://memeprod.sgp1.digitaloceanspaces.com/user-wtf/1592115472837.jpg"
+                    alt=""
+                />
+            </div>
+        </div>
+    </body>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                showResult: false,
+                personalID: '',
+                imgList: [
+                    // 'https://s3.buy123.com.tw/images/upload/ISoy0kqUrE3VYJ9m.png'
+                ],
+                jackpotList: [],
+                w1List: [
+                    {
+                        time: '1',
+                        name: '國旅券',
+                        list: ['21', '32', '98', '67', '97', '410'],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-travel.png',
+                    },
+                    {
+                        time: '1',
+                        name: 'i原券',
+                        list: ['64', '85'],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-i.png',
+                    },
+                    {
+                        time: '1',
+                        name: '農遊券',
+                        list: ['89', '32', '54', '597', '453', '152'],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-Farm.png',
+                    },
+                    {
+                        time: '1',
+                        name: '藝放券數位',
+                        list: ['96', '15', '07', '30', '73', '98', '19', '11'],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-efun.png',
+                    },
+                    {
+                        time: '1',
+                        name: '藝放券紙本',
+                        list: ['39', '37', '23', '36', '79', '08', '14', '75'],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-efun.png',
+                    },
+                    {
+                        time: '1',
+                        name: '動滋券',
+                        list: [
+                            '97',
+                            '13',
+                            '19',
+                            '55',
+                            '71',
+                            '93',
+                            '381',
+                            '734',
+                            '644',
+                            '453',
+                            '985',
+                        ],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-excise.png',
+                    },
+                    {
+                        time: '1',
+                        name: '客庄券',
+                        list: ['81', '900'],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-ha.png',
+                    },
+                    {
+                        time: '1',
+                        name: '地方創生券',
+                        list: [
+                            '081',
+                            '105',
+                            '594',
+                            '188',
+                            '089',
+                            '396',
+                            '521',
+                            '467',
+                            '912',
+                            '798',
+                            '358',
+                            '441',
+                            '367',
+                            '941',
+                            '335',
+                        ],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-local.png',
+                    },
+                ],
+                w2List: [
+                    {
+                        time: '2',
+                        name: '國旅券',
+                        list: ['87', '04', '40', '29', '71'],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-travel.png',
+                    },
+                    {
+                        time: '2',
+                        name: 'i原券',
+                        list: ['12', '59'],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-i.png',
+                    },
+                    {
+                        time: '2',
+                        name: '農遊券',
+                        list: ['50', '13'],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-Farm.png',
+                    },
+                    {
+                        time: '2',
+                        name: '藝fun券數位',
+                        list: ['78', '00', '39', '22', '61', '23', '15'],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-efun.png',
+                    },
+                    {
+                        time: '2',
+                        name: '藝fun券紙本',
+                        list: ['37', '76', '31', '06', '51', '65', '81'],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-efun.png',
+                    },
+                    {
+                        time: '2',
+                        name: '動滋券',
+                        list: ['91', '11', '04', '18', '57', '498', '756'],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-excise.png',
+                    },
+                    {
+                        time: '2',
+                        name: '客庄券',
+                        list: [
+                            '11',
+                            '439',
+                            '841',
+                            '052',
+                            '206',
+                            '161',
+                            '457',
+                            '205',
+                            '012',
+                            '293',
+                            '446',
+                            '589',
+                        ],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-ha.png',
+                    },
+                    {
+                        time: '2',
+                        name: '地方創生券',
+                        list: ['598', '880', '886', '675', '684', '568', '645', '456'],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-local.png',
+                    },
+                ],
+            },
+            methods: {
+                search() {
+                    this.showResult = true
+                    this.jackpotList = []
+                    this.w1List.forEach((el) => {
+                        const found = el.list.find((item) => {
+                            if (item === this.personalID) this.jackpotList.push(el)
+                        })
+                    })
+                    this.w2List.forEach((el) => {
+                        const found = el.list.find((item) => {
+                            if (item === this.personalID) this.jackpotList.push(el)
+                        })
+                    })
+                    console.log(this.jackpotList)
+                },
+            },
+        })
+    </script>
+</html>

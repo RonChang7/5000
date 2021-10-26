@@ -9,7 +9,9 @@
     </head>
     <style>
         body {
+            box-sizing: border-box;
             margin: auto;
+            width: 100%;
             height: 100vh;
             line-height: 1.5;
             display: flex;
@@ -22,11 +24,11 @@
             background-size: cover;
         }
         #app {
-            width: 700px;
+            max-width: 700px;
             text-align: center;
-            margin: 100px;
+            margin: 10px auto;
         }
-       
+
         .title {
             /* text-align-last: left; */
         }
@@ -46,33 +48,50 @@
                 opacity: 1;
             }
         }
+        .updateDate{
+            position: absolute;
+            bottom: 0;
+            right: 5px;
+            font-size: 14px;
+        }
+        .inputBlock {
+            width: 280px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 50px auto 20px;
+            height: 45px;
+        }
         input {
+            width: 85%;
             font-size: 20px;
             border: solid 1px transparent;
             outline: none;
             padding: 9px;
-            margin-bottom: 20px;
-            border-radius: 6px;
-            margin-top: 50px;
+            border-radius: 6px 0 0 6px;
         }
         input:focus {
             border: solid 1px #2895a1;
         }
         .search {
+            display: flex;
+            width: 15%;
+            justify-content: center;
+            align-items: center;
             font-size: 16px;
-            border: none;
             color: silver;
             cursor: pointer;
             outline: none;
-            padding: 14px 13px 12px;
-            margin-left: -10px;
+            padding: 9px;
             background: #254043;
+            border: solid 1px transparent;
             border-radius: 0 6px 6px 0;
         }
         .search:hover {
             font-weight: bold;
             background: #2895a1;
             color: #f2f2f1;
+            border: solid 1px #2895a1;
         }
         ::-webkit-input-placeholder {
             font-size: 16px;
@@ -81,40 +100,59 @@
             display: flex;
             flex-direction: column;
             color: #e4004d;
-            margin-top: 50px;
+            margin-top: 20px;
         }
         .result_text {
             font-size: 18px;
         }
         .result_nothingImg {
-            width: 500px;
-            margin:20px auto;
+            width: 280px;
+            margin: 20px auto;
         }
         .prizeLogo {
             width: 150px;
             margin: auto;
+        }
+        @media screen and (min-width: 768px) {
+            #app {
+                margin: 100px auto;
+            }
+            .result {
+                margin-top: 50px;
+            }
+            .result_nothingImg {
+                width: 500px;
+                margin: 20px auto;
+            }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <body>
         <div id="app">
             <h1 class="title">5倍力量</h1>
-            <h3 class="subTitle">今年是5倍 <img v-for=" item in 5" class="subTitle" src="./diamond.svg" alt /></h3>
+            <h3 class="subTitle">
+                今年是5倍 <img v-for=" item in 5" class="subTitle" src="./diamond.svg" alt />
+            </h3>
             <br />
             <!-- <img :src="imgList" alt="noPics" /><br /> -->
-            <span></span>
-            <input type="text" placeholder="請輸入身分證字號後三碼" v-model="personalID" />
-            <span class="search" @click="search">查詢</span>
+            <span class="updateDate">資料更新日期: {{'2021-10-26'}}</span>
+            <div class="inputBlock">
+                <input type="text" placeholder="請輸入身分證字號後三碼" v-model="personalID" />
+                <span class="search" @click="search">查詢</span>
+            </div>
             <div class="result" v-for="item in jackpotList">
                 <span class="result_text"
-                    >🎊 🎊 🎊 恭喜您中了第{{item.time}}周的{{item.name}}🎊 🎊 🎊</span
+                    >🎆🎆🎆🎆🎆🎆🎆🎆<br /><br />
+                    恭喜您中了第{{item.time}}周的{{item.name}}<br /><br />
+                    🎊 🎊 🎊💃🕺💃🕺💃🕺 🥂🥂🥂</span
                 >
                 <img :src="item.imgSrc" class="prizeLogo" alt="" />
                 <!-- {{ item }} -->
             </div>
             <div v-if="showResult && jackpotList.length === 0" class="result">
                 <span class="result_text">💩💩💩Oops...You got nothing !!💩💩💩</span>
-                <img class="result_nothingImg"
+                <img
+                    class="result_nothingImg"
                     src="https://memeprod.sgp1.digitaloceanspaces.com/user-wtf/1592115472837.jpg"
                     alt=""
                 />
@@ -127,7 +165,7 @@
             data: {
                 showResult: false,
                 personalID: '',
-
+                date: '',
                 imgList: [
                     // 'https://s3.buy123.com.tw/images/upload/ISoy0kqUrE3VYJ9m.png'
                 ],
@@ -273,32 +311,97 @@
                         imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-local.png',
                     },
                 ],
+                w3List: [
+                    {
+                        time: '3',
+                        name: '國旅券',
+                        list: ['44', '34', '09', '55', '35', '041'],
+                        imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-travel.png',
+                    },
+                    // {
+                    //     time: '3',
+                    //     name: 'i原券',
+                    //     list: ['12', '59'],
+                    //     imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-i.png',
+                    // },
+                    // {
+                    //     time: '3',
+                    //     name: '農遊券',
+                    //     list: ['50', '13'],
+                    //     imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-Farm.png',
+                    // },
+                    // {
+                    //     time: '3',
+                    //     name: '藝fun券數位',
+                    //     list: ['78', '00', '39', '22', '61', '23', '15'],
+                    //     imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-efun.png',
+                    // },
+                    // {
+                    //     time: '3',
+                    //     name: '藝fun券紙本',
+                    //     list: ['37', '76', '31', '06', '51', '65', '81'],
+                    //     imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-efun.png',
+                    // },
+                    // {
+                    //     time: '3',
+                    //     name: '動滋券',
+                    //     list: ['91', '11', '04', '18', '57', '498', '756'],
+                    //     imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-excise.png',
+                    // },
+                    // {
+                    //     time: '3',
+                    //     name: '客庄券',
+                    //     list: [
+                    //         '11',
+                    //         '439',
+                    //         '841',
+                    //         '052',
+                    //         '206',
+                    //         '161',
+                    //         '457',
+                    //         '205',
+                    //         '012',
+                    //         '293',
+                    //         '446',
+                    //         '589',
+                    //     ],
+                    //     imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-ha.png',
+                    // },
+                    // {
+                    //     time: '3',
+                    //     name: '地方創生券',
+                    //     list: ['598', '880', '886', '675', '684', '568', '645', '456'],
+                    //     imgSrc: 'https://vhpi.5000.gov.tw/inc/img/logo-local.png',
+                    // },
+                ],
+            },
+            mounted() {
+                const newDate = new Date()
+                const YYYY = newDate.getFullYear()
+                const month = String(newDate.getMonth() + 1)
+                const MM = month.padStart(2, '0')
+                const date = String(newDate.getDate())
+                const DD = date.padStart(2, '0')
+
+                this.date = `${YYYY}-${MM}-${DD}`
             },
             methods: {
                 search() {
                     this.showResult = true
                     this.jackpotList = []
                     if (this.personalID === '') return
-                    this.w1List.forEach((el) => {
-                        const found = el.list.filter((item) => {
-                            let newStr
-                            if (item.length === 2) newStr = this.personalID.slice(-2)
-                            else newStr = this.personalID
-                            const findStr = newStr.includes(item)
-                            if (findStr) this.jackpotList.push(el)
-                            return this.jackpotList
+                    for (let week = 1; week < 4; week++) {
+                        this[`w${week}List`].forEach((el) => {
+                            const found = el.list.filter((item) => {
+                                let newStr
+                                if (item.length === 2) newStr = this.personalID.slice(-2)
+                                else newStr = this.personalID
+                                const findStr = newStr.includes(item)
+                                if (findStr) this.jackpotList.push(el)
+                                return this.jackpotList
+                            })
                         })
-                    })
-                    this.w2List.forEach((el) => {
-                        const found = el.list.filter((item) => {
-                            let newStr
-                            if (item.length === 2) newStr = this.personalID.slice(-2)
-                            else newStr = this.personalID
-                            const findStr = newStr.includes(item)
-                            if (findStr) this.jackpotList.push(el)
-                            return this.jackpotList
-                        })
-                    })
+                    }
                     console.log(this.jackpotList)
                 },
             },

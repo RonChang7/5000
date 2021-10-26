@@ -2,14 +2,30 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <title>5000</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="查詢振興5倍券，只要輸入身分證後三碼就可以查詢從10/12至今，所有的中獎號碼"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="5000 - 查詢振興5倍券" />
+        <meta property="og:url" content="https://ronchang7.github.io/5000/" />
+        <meta property="og:locale" content="zh_TW" />
+        <meta
+            http-equiv="origin-trial"
+            content="AxujKG9INjsZ8/gUq8+dTruNvk7RjZQ1oFhhgQbcTJKDnZfbzSTE81wvC2Hzaf3TW4avA76LTZEMdiedF1vIbA4AAABueyJvcmlnaW4iOiJodHRwczovL2ltYXNkay5nb29nbGVhcGlzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0="
+        />
         <link href="https://vhpi.5000.gov.tw/inc/img/ico.png" rel="icon" />
-        <title>5000</title>
     </head>
     <style>
         body {
             box-sizing: border-box;
+            font-family: 'Mulish', 'Noto Sans TC', 'Chivo', '微軟正黑體', '-apple-system',
+                'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans',
+                'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji',
+                sans-serif;
             margin: auto;
             width: 100%;
             height: 100vh;
@@ -25,8 +41,9 @@
         }
         #app {
             max-width: 700px;
+            min-height: 400px;
             text-align: center;
-            margin: 10px auto;
+            margin: auto;
         }
 
         .title {
@@ -48,9 +65,9 @@
                 opacity: 1;
             }
         }
-        .updateDate{
+        .updateDate {
             position: absolute;
-            bottom: 0;
+            top: 0;
             right: 5px;
             font-size: 14px;
         }
@@ -100,22 +117,28 @@
             display: flex;
             flex-direction: column;
             color: #e4004d;
-            margin-top: 20px;
+        }
+        .result:first-of-type {
+            /* margin-top: 20px; */
         }
         .result_text {
-            font-size: 18px;
+            font-size: 17px;
+            margin-top: 10px;
         }
         .result_nothingImg {
             width: 280px;
-            margin: 20px auto;
+            margin: 15px auto;
         }
         .prizeLogo {
             width: 150px;
-            margin: auto;
+            margin: 0 auto;
+        }
+        section > div:last-of-type {
+            margin-bottom: 80px;
         }
         @media screen and (min-width: 768px) {
             #app {
-                margin: 100px auto;
+                margin: 100px auto auto;
             }
             .result {
                 margin-top: 50px;
@@ -125,39 +148,53 @@
                 margin: 20px auto;
             }
         }
+        footer {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            padding: 3px;
+            text-align: center;
+            font-size: 12px;
+            background: cadetblue;
+            color: #c9d1d2;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <body>
         <div id="app">
-            <h1 class="title">5倍力量</h1>
-            <h3 class="subTitle">
-                今年是5倍 <img v-for=" item in 5" class="subTitle" src="./diamond.svg" alt />
-            </h3>
-            <br />
-            <!-- <img :src="imgList" alt="noPics" /><br /> -->
-            <span class="updateDate">資料更新日期: {{'2021-10-26'}}</span>
-            <div class="inputBlock">
-                <input type="text" placeholder="請輸入身分證字號後三碼" v-model="personalID" />
-                <span class="search" @click="search">查詢</span>
-            </div>
-            <div class="result" v-for="item in jackpotList">
-                <span class="result_text"
-                    >🎆🎆🎆🎆🎆🎆🎆🎆<br /><br />
-                    恭喜您中了第{{item.time}}周的{{item.name}}<br /><br />
-                    🎊 🎊 🎊💃🕺💃🕺💃🕺 🥂🥂🥂</span
-                >
-                <img :src="item.imgSrc" class="prizeLogo" alt="" />
-                <!-- {{ item }} -->
-            </div>
-            <div v-if="showResult && jackpotList.length === 0" class="result">
-                <span class="result_text">💩💩💩Oops...You got nothing !!💩💩💩</span>
-                <img
-                    class="result_nothingImg"
-                    src="https://memeprod.sgp1.digitaloceanspaces.com/user-wtf/1592115472837.jpg"
-                    alt=""
-                />
-            </div>
+            <section>
+                <h1 class="title">5倍力量</h1>
+                <h3 class="subTitle">
+                    今年是5倍 <img v-for=" item in 5" class="subTitle" src="./diamond.svg" alt />
+                </h3>
+                <br />
+                <!-- <img :src="imgList" alt="noPics" /><br /> -->
+                <span class="updateDate">資料更新日期: {{'2021-10-26'}}</span>
+                <div class="inputBlock">
+                    <input type="text" placeholder="請輸入身分證字號後三碼" v-model="personalID" />
+                    <span class="search" @click="search">查詢</span>
+                </div>
+                <div class="result" v-for="item in jackpotList">
+                    <span class="result_text">🎊恭喜您中了第{{item.time}}周的{{item.name}}🎊 </span>
+                    <img
+                        :src="item.imgSrc"
+                        class="prizeLogo"
+                        :style="{ marginTop: 
+                    item.name === '客庄券'?'20px':''}"
+                        alt="恭喜中獎"
+                    />
+                </div>
+                <div v-if="showResult && jackpotList.length === 0" class="result">
+                    <span class="result_text">💩💩💩Oops...You got nothing !!💩💩💩</span>
+                    <img
+                        class="result_nothingImg"
+                        src="https://memeprod.sgp1.digitaloceanspaces.com/user-wtf/1592115472837.jpg"
+                        alt=""
+                    />
+                </div>
+            </section>
         </div>
+        <footer>©2021 Ron Chang 🏳️‍⚧️</footer>
     </body>
     <script>
         const app = new Vue({

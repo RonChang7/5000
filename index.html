@@ -136,6 +136,11 @@
         section > div:last-of-type {
             margin-bottom: 80px;
         }
+        .counter {
+            position: absolute;
+            bottom: 30px;
+            right: 10px;
+        }
         @media screen and (min-width: 768px) {
             #app {
                 margin: 100px auto auto;
@@ -169,7 +174,7 @@
                 </h3>
                 <br />
                 <!-- <img :src="imgList" alt="noPics" /><br /> -->
-                <span class="updateDate">資料更新日期: {{'2021-10-26'}}</span>
+                <span class="updateDate">資料更新日期: {{'2021-10-28'}}</span>
                 <div class="inputBlock">
                     <input type="text" placeholder="請輸入身分證字號後三碼" v-model="personalID" />
                     <span class="search" @click="search">查詢</span>
@@ -193,6 +198,14 @@
                     />
                 </div>
             </section>
+        </div>
+        <div>
+            <a class="counter" href="https://www.mfwzjsq.com/" target="_blank"
+                ><img
+                    src="https://www.mfwzjsq.com/hit.php?id=zumfxcq&nd=1&style=2"
+                    border="0"
+                    alt="網頁計數器"
+            /></a>
         </div>
         <footer>©2021 Ron Chang 🏳️‍⚧️</footer>
     </body>
